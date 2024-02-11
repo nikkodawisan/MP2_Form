@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+      body {
+        padding-top: 56px; /* Adjust according to your navigation bar height */
+      }
+  
+      @media (min-width: 992px) {
+        body {
+          padding-top: 70px; /* Adjust according to your navigation bar height */
+        }
+      }
+    </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="#"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home</a>
+      <li class="nav-item">
+        <a class="nav-link" href="/form">Form</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-------------------------------------------------------------------------->
+        <h1>Book Form</h1>
+
+        <form>
+            <label for="form-fullname">Fullname</label> <br />
+            <input type="text" name="form-fullname" id="form-fullname" placeholder="Enter your Fullname"> <br />
+
+            <label for="form-phone">Phone Number</label> <br />
+            <input type="tel" name="form-phone" id="form-phone" placeholder="Enter Phone Number"> <br />
+
+            <label for="form-email">Email</label> <br />
+            <input type="email" name="form-email" id="form-email" placeholder="Enter your Email"> <br />
+
+            <label for="form-date">From</label> <br />
+            <input type="date" name="form-date" id="form-date" placeholder="Enter your desired date"> <br />
+
+            <label for="form-date2">To</label> <br />
+            <input type="date" name="form-date2" id="form-date2" placeholder="Enter the last day of stay"> <br />
+
+            <label for="form-option">Includes Breakfast? Y/N</label> <br />
+            <input type="text" name="form-option" id="form-option" placeholder="Y/N"> <br />
+
+            <label for="form-message">Message</label> <br />
+            <input type="text" name="form-message" id="form-message" placeholder="Enter a message"> <br />
+    
+        <br />        
+        <button type="button" id="form-Submit" onclick="addForm()">Submit</button>
+        </form>
+
+
+        <script>
+      
+      function addForm(){
+        const formFullname = document.getElementById('form-fullname').value;
+        const formPhone = document.getElementById('form-phone').value;
+        const formEmail = document.getElementById('form-email').value;
+        const formDate = document.getElementById('form-date').value;
+        const formDate2 = document.getElementById('form-date2').value;
+        const formOption = document.getElementById('form-option').value;
+        const formMessage = document.getElementById('form-message').value;
+
+        const data = {
+            formFullname: formFullname,
+            formPhone: formPhone,
+            formEmail: formEmail,
+            formDate: formDate,
+            formDate2: formDate2,
+            formOption: formOption,
+            formMessage: formMessage
+        }
+        
+        console.log(data);
+
+        fetch('http://localhost:5000/form/',
+            {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+              
+              if (data.code=='success') {
+                  console.log('Success:', data);
+                  window.location.href = "http://localhost:3000/";
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+      }
+      
+      
+      callApi();
+        </script>
+
+</body>
+</html>
